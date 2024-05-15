@@ -125,7 +125,7 @@ inputs:
           **For example:** `https://git.corp.evilcorp.com/api/v4`
 
           **You can read more about it here:** [https://danger.systems/guides/getting_started.html](https://danger.systems/guides/getting_started.html)
- - bitbucket_server_api_token:
+  - bitbucket_server_api_token:
     opts:
       category: Bitbucket Server
       title: Access token for your project
@@ -145,49 +145,49 @@ inputs:
           **For example:** `git.corp.evilcorp.com`
 
           **You can read more about it here:** [https://danger.systems/guides/getting_started.html](https://danger.systems/guides/getting_started.html)
-   bitbucket_server_username:
+  - bitbucket_server_username:
     opts:
       category: Bitbucket Server
       title: Bitbucket Server username
       summary: Bitbucket Server username
       description: |-
           Bitbucket Server username
-   bitbucket_server_git_url:
+  - bitbucket_server_git_url:
     opts:
       category: Bitbucket Server
       title: Bitbucket Server Git URL
       summary: Git URL
       description: |-
           Git Url description
-   bitbucket_server_code_insights_report_key:
+  - bitbucket_server_code_insights_report_key:
     opts:
       category: Bitbucket Server
       title: Bitbucket Server code insights report key
       summary: Sets the DANGER_BITBUCKETSERVER_CODE_INSIGHTS_REPORT_KEY in the call to Danger
       description: |-
           Bitbucket Server code insights report key
-   bitbucket_server_code_insights_report_title:
+  - bitbucket_server_code_insights_report_title:
     opts:
       category: Bitbucket Server
       title: Bitbucket Server code insights report title
       summary: Sets the DANGER_BITBUCKETSERVER_CODE_INSIGHTS_REPORT_TITLE in the call to Danger
       description: |-
           Bitbucket Server code insights report title
-   bitbucket_server_code_insights_report_description:
+  - bitbucket_server_code_insights_report_description:
     opts:
       category: Bitbucket Server
       title: Bitbucket Server code insights report description
       summary: Sets the DANGER_BITBUCKETSERVER_CODE_INSIGHTS_REPORT_DESCRIPTION in the call to Danger
       description: |-
           Bitbucket Server code insights report description
-   bitbucket_server_change_id:
+  - bitbucket_server_change_id:
     opts:
       category: Bitbucket Server
       title: Bitbucket Server Change ID
       summary: Sets the CHANGE_ID in the call to Danger
       description: |-
           Git Url description
-   bitbucket_server_dismiss_out_of_range_messages:
+  - bitbucket_server_dismiss_out_of_range_messages:
     opts:
       category: Bitbucket Server
       title: Bitbucket Server Dismiss out of range messages
