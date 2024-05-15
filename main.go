@@ -27,11 +27,22 @@ type Config struct {
 	GitlabAPIToken   stepconf.Secret `env:"gitlab_api_token"`
 	GitlabHost       string          `env:"gitlab_host"`
 	GitlabAPIBaseURL string          `env:"gitlab_api_base_url"`
+
+	BitbucketServerAPIToken stepconf.Secret   `env:"bitbucket_server_api_token"`
+	BitbucketServerHost 			 string   `env:"bitbucket_server_host"`
+	BitbucketServerUsername 		 string   `env:"bitbucket_server_username"`
+	BitbucketServerGitURL		     string   `env:"bitbucket_server_git_url"`
+	BitbucketServerCodeInsightsKey   string   `env:"bitbucket_server_code_insights_report_key"`
+	BitbucketServerCodeInsightsTitle string   `env:"bitbucket_server_code_insights_report_title"`
+	BitbucketServerCodeInsightsDesc  string   `env:"bitbucket_server_code_insights_report_description"`
+	BitbucketServerChangeID 		 string   `env:"bitbucket_server_change_id"`
+	BitbucketServerDismissOutOfRange string   `env:"bitbucket_server_dismiss_out_of_range_messages"`
+
 }
 
 func validateInputs(cfg Config) {
-	if cfg.GithubAPIToken == "" && cfg.GitlabAPIToken == "" {
-		failf("None of the API tokens have been set.  If you want to use GitHub you need to set github_api_token. If you want to use GitLab you need to set gitlab_api_token")
+	if cfg.GithubAPIToken == "" && cfg.GitlabAPIToken == "" && cfg.BitbucketServerAPIToken == "" {
+		failf("None of the API tokens have been set.  If you want to use GitHub you need to set github_api_token. If you want to use GitLab you need to set gitlab_api_token. If you want to use Bitbucket Server you need to set bitbucket_server_api_token")
 	}
 
 	// GitHub enterprise
@@ -85,6 +96,16 @@ func main() {
 		"DANGER_GITLAB_API_TOKEN":    string(cfg.GitlabAPIToken),
 		"DANGER_GITLAB_HOST":         cfg.GitlabHost,
 		"DANGER_GITLAB_API_BASE_URL": cfg.GitlabAPIBaseURL,
+		"DANGER_BITBUCKETSERVER_HOST": 								cfg.BitbucketServerHost,
+		"DANGER_BITBUCKETSERVER_USERNAME":							cfg.BitbucketServerUsername,
+		"DANGER_BITBUCKETSERVER_PASSWORD":							string(cfg.BitbucketServerAPIToken),
+		"JENKINS_URL":												"https://your-jenkins.com", // this can be anything
+		"GIT_URL":													cfg.BitbucketServerGitURL,
+		"DANGER_BITBUCKETSERVER_CODE_INSIGHTS_REPORT_KEY":			cfg.BitbucketServerCodeInsightsKey,
+		"DANGER_BITBUCKETSERVER_CODE_INSIGHTS_REPORT_TITLE":		cfg.BitbucketServerCodeInsightsTitle,
+		"DANGER_BITBUCKETSERVER_CODE_INSIGHTS_REPORT_DESCRIPTION":	cfg.BitbucketServerCodeInsightsDesc,
+		"CHANGE_ID":												cfg.BitbucketServerChangeID,
+		"DANGER_BITBUCKETSERVER_DISMISS_OUT_OF_RANGE_MESSAGES":		cfg.BitbucketServerDismissOutOfRange,
 	} {
 		if value != "" {
 			if err := os.Setenv(key, value); err != nil {
