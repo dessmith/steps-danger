@@ -36,7 +36,7 @@ type Config struct {
 	BitbucketServerCodeInsightsTitle string   `env:"bitbucket_server_code_insights_report_title"`
 	BitbucketServerCodeInsightsDesc  string   `env:"bitbucket_server_code_insights_report_description"`
 	BitbucketServerChangeID 		 string   `env:"bitbucket_server_change_id"`
-	BitbucketServerDismissOutOfRange string   "TRUE"
+	// BitbucketServerDismissOutOfRange string   `env:"bitbucket_server_dismiss_out_of_range_messages"`
 
 }
 
@@ -105,7 +105,7 @@ func main() {
 		"DANGER_BITBUCKETSERVER_CODE_INSIGHTS_REPORT_TITLE":		cfg.BitbucketServerCodeInsightsTitle,
 		"DANGER_BITBUCKETSERVER_CODE_INSIGHTS_REPORT_DESCRIPTION":	cfg.BitbucketServerCodeInsightsDesc,
 		"CHANGE_ID":												cfg.BitbucketServerChangeID,
-		"DANGER_BITBUCKETSERVER_DISMISS_OUT_OF_RANGE_MESSAGES":		cfg.BitbucketServerDismissOutOfRange,
+		"DANGER_BITBUCKETSERVER_DISMISS_OUT_OF_RANGE_MESSAGES":		"TRUE",
 	} {
 		if value != "" {
 			if err := os.Setenv(key, value); err != nil {
