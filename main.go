@@ -105,7 +105,7 @@ func main() {
 		"DANGER_BITBUCKETSERVER_CODE_INSIGHTS_REPORT_TITLE":       cfg.BitbucketServerCodeInsightsTitle,
 		"DANGER_BITBUCKETSERVER_CODE_INSIGHTS_REPORT_DESCRIPTION": cfg.BitbucketServerCodeInsightsDesc,
 		"CHANGE_ID":                                               cfg.BitbucketServerChangeID,
-		"DANGER_BITBUCKETSERVER_DISMISS_OUT_OF_RANGE_MESSAGES":    cfg.BitbucketServerDismissOutOfRange,
+		// "DANGER_BITBUCKETSERVER_DISMISS_OUT_OF_RANGE_MESSAGES":    cfg.BitbucketServerDismissOutOfRange,
 	} {
 		if value != "" {
 			if err := os.Setenv(key, value); err != nil {
