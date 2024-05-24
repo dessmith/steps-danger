@@ -28,14 +28,14 @@ type Config struct {
 	GitlabHost       string          `env:"gitlab_host"`
 	GitlabAPIBaseURL string          `env:"gitlab_api_base_url"`
 
-	BitbucketServerAPIToken stepconf.Secret   `env:"bitbucket_server_api_token"`
-	BitbucketServerHost 			 string   `env:"bitbucket_server_host"`
-	BitbucketServerUsername 		 string   `env:"bitbucket_server_username"`
-	BitbucketServerGitURL		     string   `env:"bitbucket_server_git_url"`
-	BitbucketServerCodeInsightsKey   string   `env:"bitbucket_server_code_insights_report_key"`
-	BitbucketServerCodeInsightsTitle string   `env:"bitbucket_server_code_insights_report_title"`
-	BitbucketServerCodeInsightsDesc  string   `env:"bitbucket_server_code_insights_report_description"`
-	BitbucketServerChangeID 		 string   `env:"bitbucket_server_change_id"`
+	BitbucketServerAPIToken          stepconf.Secret `env:"bitbucket_server_api_token"`
+	BitbucketServerHost              string          `env:"bitbucket_server_host"`
+	BitbucketServerUsername          string          `env:"bitbucket_server_username"`
+	BitbucketServerGitURL            string          `env:"bitbucket_server_git_url"`
+	BitbucketServerCodeInsightsKey   string          `env:"bitbucket_server_code_insights_report_key"`
+	BitbucketServerCodeInsightsTitle string          `env:"bitbucket_server_code_insights_report_title"`
+	BitbucketServerCodeInsightsDesc  string          `env:"bitbucket_server_code_insights_report_description"`
+	BitbucketServerChangeID          string          `env:"bitbucket_server_change_id"`
 	// BitbucketServerDismissOutOfRange string   `env:"bitbucket_server_dismiss_out_of_range_messages"`
 
 }
@@ -89,23 +89,23 @@ func main() {
 	//
 	// Set local envs for the step
 	for key, value := range map[string]string{
-		"GIT_REPOSITORY_URL":         cfg.RepositoryURL,
-		"DANGER_GITHUB_API_TOKEN":    string(cfg.GithubAPIToken),
-		"DANGER_GITHUB_HOST":         cfg.GithubHost,
-		"DANGER_GITHUB_API_BASE_URL": cfg.GithubAPIBaseURL,
-		"DANGER_GITLAB_API_TOKEN":    string(cfg.GitlabAPIToken),
-		"DANGER_GITLAB_HOST":         cfg.GitlabHost,
-		"DANGER_GITLAB_API_BASE_URL": cfg.GitlabAPIBaseURL,
-		"DANGER_BITBUCKETSERVER_HOST": 								cfg.BitbucketServerHost,
-		"DANGER_BITBUCKETSERVER_USERNAME":							cfg.BitbucketServerUsername,
-		"DANGER_BITBUCKETSERVER_PASSWORD":							string(cfg.BitbucketServerAPIToken),
-		"JENKINS_URL":												"https://your-jenkins.com", // this can be anything
-		"GIT_URL":													cfg.BitbucketServerGitURL,
-		"DANGER_BITBUCKETSERVER_CODE_INSIGHTS_REPORT_KEY":			cfg.BitbucketServerCodeInsightsKey,
-		"DANGER_BITBUCKETSERVER_CODE_INSIGHTS_REPORT_TITLE":		cfg.BitbucketServerCodeInsightsTitle,
-		"DANGER_BITBUCKETSERVER_CODE_INSIGHTS_REPORT_DESCRIPTION":	cfg.BitbucketServerCodeInsightsDesc,
-		"CHANGE_ID":												cfg.BitbucketServerChangeID,
-		// "DANGER_BITBUCKETSERVER_DISMISS_OUT_OF_RANGE_MESSAGES":		cfg.BitbucketServerDismissOutOfRange,
+		"GIT_REPOSITORY_URL":                                      cfg.RepositoryURL,
+		"DANGER_GITHUB_API_TOKEN":                                 string(cfg.GithubAPIToken),
+		"DANGER_GITHUB_HOST":                                      cfg.GithubHost,
+		"DANGER_GITHUB_API_BASE_URL":                              cfg.GithubAPIBaseURL,
+		"DANGER_GITLAB_API_TOKEN":                                 string(cfg.GitlabAPIToken),
+		"DANGER_GITLAB_HOST":                                      cfg.GitlabHost,
+		"DANGER_GITLAB_API_BASE_URL":                              cfg.GitlabAPIBaseURL,
+		"DANGER_BITBUCKETSERVER_HOST":                             cfg.BitbucketServerHost,
+		"DANGER_BITBUCKETSERVER_USERNAME":                         cfg.BitbucketServerUsername,
+		"DANGER_BITBUCKETSERVER_PASSWORD":                         string(cfg.BitbucketServerAPIToken),
+		"JENKINS_URL":                                             "https://your-jenkins.com", // this can be anything
+		"GIT_URL":                                                 cfg.BitbucketServerGitURL,
+		"DANGER_BITBUCKETSERVER_CODE_INSIGHTS_REPORT_KEY":         cfg.BitbucketServerCodeInsightsKey,
+		"DANGER_BITBUCKETSERVER_CODE_INSIGHTS_REPORT_TITLE":       cfg.BitbucketServerCodeInsightsTitle,
+		"DANGER_BITBUCKETSERVER_CODE_INSIGHTS_REPORT_DESCRIPTION": cfg.BitbucketServerCodeInsightsDesc,
+		"CHANGE_ID":                                               cfg.BitbucketServerChangeID,
+		"DANGER_BITBUCKETSERVER_DISMISS_OUT_OF_RANGE_MESSAGES":    cfg.BitbucketServerDismissOutOfRange,
 	} {
 		if value != "" {
 			if err := os.Setenv(key, value); err != nil {
@@ -115,7 +115,7 @@ func main() {
 	}
 
 	// Sets DANGER_BITBUCKETSERVER_DISMISS_OUT_OF_RANGE_MESSAGES to true
-	os.Setenv("DANGER_BITBUCKETSERVER_DISMISS_OUT_OF_RANGE_MESSAGES", "TRUE")
+	os.Setenv("DANGER_BITBUCKETSERVER_DISMISS_OUT_OF_RANGE_MESSAGES", "true")
 
 	//
 	// Check dependencies
@@ -167,6 +167,15 @@ func main() {
 	additionalOptions, err := shellquote.Split(cfg.AdditionalOptions)
 	if err != nil {
 		failf("Failed to shell-quote additional options (%s): %s", cfg.AdditionalOptions, err)
+	}
+
+	cmd = command.New("go", "run", "environment-variables.go")
+	cmd.SetStdout(os.Stdout)
+	cmd.SetStderr(os.Stderr)
+	log.Printf("$ %s", cmd.PrintableCommandArgs())
+
+	if err := cmd.Run(); err != nil {
+		failf("Failed to run bundle exec danger, error: %s", err)
 	}
 
 	cmd = command.New("bundle", append([]string{"exec", "danger"}, additionalOptions...)...)
