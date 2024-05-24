@@ -169,15 +169,6 @@ func main() {
 		failf("Failed to shell-quote additional options (%s): %s", cfg.AdditionalOptions, err)
 	}
 
-	cmd = command.New("go", "run", "environment-variables.go")
-	cmd.SetStdout(os.Stdout)
-	cmd.SetStderr(os.Stderr)
-	log.Printf("$ %s", cmd.PrintableCommandArgs())
-
-	if err := cmd.Run(); err != nil {
-		failf("Failed to run bundle exec danger, error: %s", err)
-	}
-
 	cmd = command.New("bundle", append([]string{"exec", "danger"}, additionalOptions...)...)
 	cmd.SetStdout(os.Stdout)
 	cmd.SetStderr(os.Stderr)
