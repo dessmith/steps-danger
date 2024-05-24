@@ -36,7 +36,7 @@ type Config struct {
 	BitbucketServerCodeInsightsTitle string   `env:"bitbucket_server_code_insights_report_title"`
 	BitbucketServerCodeInsightsDesc  string   `env:"bitbucket_server_code_insights_report_description"`
 	BitbucketServerChangeID 		 string   `env:"bitbucket_server_change_id"`
-	BitbucketServerDismissOutOfRange string   `env:"bitbucket_server_dismiss_out_of_range_messages"`
+	BitbucketServerDismissOutOfRange string   "TRUE"
 
 }
 
